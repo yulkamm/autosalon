@@ -8,6 +8,11 @@ from functools import wraps
 
 main_bp = Blueprint('main', __name__)
 
+# Health check route
+@main_bp.route('/health')
+def health():
+    return '<h1>✅ Flask is running!</h1><p>Application is working correctly.</p>'
+
 def get_paginated_items(query, page=1, per_page=10):
     pagination = query.paginate(page=page, per_page=per_page, error_out=False)
     return pagination.items, pagination
