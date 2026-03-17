@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Админ-панель{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1> Админ-панель</h1>
+    <p>Панель управления автосалоном</p>
+</div>
+
+<section class="admin-dashboard">
+    <div class="container">
+        <div class="admin-welcome">
+            <h2>Добро пожаловать, {{ current_user.username }}!</h2>
+            <p>Вы вошли как <strong>{% if current_user.is_admin %}АДМИНИСТРАТОР{% else %}ПОЛЬЗОВАТЕЛЬ{% endif %}</strong></p>
+            <p>Здесь вы можете управлять данными автосалона: добавлять, редактировать и удалять записи.</p>
+        </div>
+        
+        <div class="admin-stats">
+            <div class="stat-card">
+                <h3> Автомобили</h3>
+                <p class="stat-number">{{ cars_count }}</p>
+                <p>записей в базе</p>
+            </div>
+            <div class="stat-card">
+                <h3> Продажи</h3>
+                <p class="stat-number">{{ sales_count }}</p>
+                <p>записей в базе</p>
+            </div>
+        </div>
+        
+        <div class="admin-cards">
+            <a href="{{ url_for('main.admin_cars') }}" class="admin-card">
+                <div class="card-icon"></div>
+                <h3>Управление автомобилями</h3>
+                <p>Просмотр, добавление, редактирование и удаление записей об автомобилях</p>
+                <span class="card-link">Перейти </span>
+            </a>
+            
+            <a href="{{ url_for('main.admin_sales') }}" class="admin-card">
+                <div class="card-icon"></div>
+                <h3>Управление продажами</h3>
+                <p>Просмотр, добавление, редактирование и удаление записей о продажах</p>
+                <span class="card-link">Перейти </span>
+            </a>
+        </div>
+        
+        <div class="admin-info">
+            <h3>ℹ Информация о правах доступа</h3>
+            <div class="permissions-info">
+                <div class="permission-item">
+                    <h4> Обычные пользователи:</h4>
+                    <ul>
+                        <li> Просмотр всех страниц сайта</li>
+                        <li> Просмотр каталога автомобилей</li>
+                        <li> Просмотр истории продаж</li>
+                        <li> Нет доступа к редактированию</li>
+                    </ul>
+                </div>
+                <div class="permission-item">
+                    <h4> Администраторы:</h4>
+                    <ul>
+                        <li> Все права обычных пользователей</li>
+                        <li> Добавление новых записей</li>
+                        <li> Редактирование существующих записей</li>
+                        <li> Удаление записей</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

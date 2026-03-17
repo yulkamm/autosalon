@@ -1,0 +1,76 @@
+﻿{% extends "base.html" %}
+{% block title %}{{ 'Редактировать' if sale else 'Добавить' }} продажу{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{{ 'Редактировать' if sale else 'Добавить' }} продажу</h1>
+</div>
+
+<section class="admin-section">
+    <div class="container">
+        <form method="POST" class="admin-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="car_brand">Марка:</label>
+                    <input type="text" id="car_brand" name="car_brand" value="{{ sale.car_brand if sale else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="car_model">Модель:</label>
+                    <input type="text" id="car_model" name="car_model" value="{{ sale.car_model if sale else '' }}" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sale_date">Дата продажи:</label>
+                    <input type="date" id="sale_date" name="sale_date" value="{{ sale.sale_date if sale else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="sale_price">Цена:</label>
+                    <input type="number" id="sale_price" name="sale_price" value="{{ sale.sale_price if sale else '' }}" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="customer_name">Покупатель:</label>
+                    <input type="text" id="customer_name" name="customer_name" value="{{ sale.customer_name if sale else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer_phone">Телефон:</label>
+                    <input type="text" id="customer_phone" name="customer_phone" value="{{ sale.customer_phone if sale else '' }}" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="manager_name">Менеджер:</label>
+                    <input type="text" id="manager_name" name="manager_name" value="{{ sale.manager_name if sale else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="payment_method">Способ оплаты:</label>
+                    <select id="payment_method" name="payment_method" required>
+                        <option value="Наличные" {{ 'selected' if sale and sale.payment_method == 'Наличные' }}>Наличные</option>
+                        <option value="Банковская карта" {{ 'selected' if sale and sale.payment_method == 'Банковская карта' }}>Банковская карта</option>
+                        <option value="Банковский перевод" {{ 'selected' if sale and sale.payment_method == 'Банковский перевод' }}>Банковский перевод</option>
+                        <option value="Кредит" {{ 'selected' if sale and sale.payment_method == 'Кредит' }}>Кредит</option>
+                        <option value="Лизинг" {{ 'selected' if sale and sale.payment_method == 'Лизинг' }}>Лизинг</option>
+                    </select>
+                </div>
+            </div>
+            
+            {% if not sale %}
+            <div class="form-group">
+                <p style="color: #666; font-size: 0.9rem;">
+                    Фотография будет автоматически выбрана из доступных (1-10).
+                </p>
+            </div>
+            {% endif %}
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">{{ 'Сохранить' if sale else 'Добавить' }}</button>
+                <a href="{{ url_for('main.sales') }}" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

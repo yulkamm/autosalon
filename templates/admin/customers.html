@@ -1,0 +1,69 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Клиенты{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1> Управление клиентами</h1>
+    {% if current_user.is_admin %}
+    <a href="{{ url_for('main.admin_customer_add') }}" class="btn btn-success">+ Добавить клиента</a>
+    {% endif %}
+</div>
+
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ФИО</th>
+                <th>Телефон</th>
+                <th>Email</th>
+                <th>Адрес</th>
+                <th>Дата рождения</th>
+                <th>Предпочитаемое авто</th>
+                <th>Статус</th>
+                {% if current_user.is_admin %}
+                <th>Действия</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.full_name }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.birth_date.strftime('%d.%m.%Y') }}</td>
+                <td>{{ customer.preferred_car }}</td>
+                <td><span class="status status-{{ customer.status|lower }}">{{ customer.status }}</span></td>
+                {% if current_user.is_admin %}
+                <td class="actions">
+                    <a href="{{ url_for('main.admin_customer_edit', id=customer.id) }}" class="btn btn-sm btn-primary"></a>
+                    <form action="{{ url_for('main.admin_customer_delete', id=customer.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Удалить?');">
+                        <button type="submit" class="btn btn-sm btn-danger"></button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Пагинация -->
+<div class="pagination">
+    {% if pagination.has_prev %}
+    <a href="{{ url_for('main.admin_customers', page=pagination.prev_num) }}" class="btn"> Назад</a>
+    {% endif %}
+    
+    <span class="page-info">Страница {{ pagination.page }} из {{ pagination.pages }}</span>
+    
+    {% if pagination.has_next %}
+    <a href="{{ url_for('main.admin_customers', page=pagination.next_num) }}" class="btn">Вперед </a>
+    {% endif %}
+</div>
+
+<p class="total-records">Всего записей: {{ pagination.total }}</p>
+{% endblock %}

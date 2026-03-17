@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ car.brand }} {{ car.model }}{% endblock %}
+{% block content %}
+<div class="page-header"><h1> {{ car.brand }} {{ car.model }}</h1></div>
+<section class="content-section">
+    <div class="container">
+        <div class="detail-card">
+            <div class="detail-photo">
+                <img src="{{ url_for('static', filename='images/' + car.photo) }}" alt="{{ car.brand }}" onerror="this.src='https://via.placeholder.com/600x400?text=No+Photo'">
+            </div>
+            <div class="detail-info">
+                <h2>Характеристики</h2>
+                <div class="detail-row"><span class="detail-label">Марка:</span><span class="detail-value">{{ car.brand }}</span></div>
+                <div class="detail-row"><span class="detail-label">Модель:</span><span class="detail-value">{{ car.model }}</span></div>
+                <div class="detail-row"><span class="detail-label">Год:</span><span class="detail-value">{{ car.year }}</span></div>
+                <div class="detail-row"><span class="detail-label">Цена:</span><span class="detail-value price">{{ car.price }} </span></div>
+                <div class="detail-row"><span class="detail-label">Цвет:</span><span class="detail-value">{{ car.color }}</span></div>
+                <div class="detail-row"><span class="detail-label">Пробег:</span><span class="detail-value">{{ car.mileage }} км</span></div>
+                <div class="detail-row"><span class="detail-label">Двигатель:</span><span class="detail-value">{{ car.engine }}</span></div>
+                <div class="detail-row"><span class="detail-label">КПП:</span><span class="detail-value">{{ car.transmission }}</span></div>
+            </div>
+        </div>
+        <div class="detail-actions">
+            <a href="{{ url_for('main.cars') }}" class="btn"> Назад</a>
+            <a href="{{ url_for('main.contacts') }}" class="btn btn-success"> Связаться</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

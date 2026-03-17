@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Админ-панель{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="admin-navbar">
+        <div class="container">
+            <div class="admin-logo"> Админ-панель</div>
+            <ul class="admin-nav-links">
+                <li><a href="{{ url_for('main.index') }}"> На сайт</a></li>
+                <li><a href="{{ url_for('main.admin_cars') }}"> Автомобили</a></li>
+                <li><a href="{{ url_for('main.admin_customers') }}"> Клиенты</a></li>
+                <li><a href="{{ url_for('main.logout') }}"> Выйти</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="admin-main">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+</body>
+</html>

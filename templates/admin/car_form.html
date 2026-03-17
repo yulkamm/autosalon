@@ -1,0 +1,72 @@
+﻿{% extends "base.html" %}
+{% block title %}{{ 'Редактировать' if car else 'Добавить' }} автомобиль{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{{ 'Редактировать' if car else 'Добавить' }} автомобиль</h1>
+</div>
+
+<section class="admin-section">
+    <div class="container">
+        <form method="POST" class="admin-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="brand">Марка:</label>
+                    <input type="text" id="brand" name="brand" value="{{ car.brand if car else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="model">Модель:</label>
+                    <input type="text" id="model" name="model" value="{{ car.model if car else '' }}" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="year">Год:</label>
+                    <input type="number" id="year" name="year" value="{{ car.year if car else '2024' }}" min="1990" max="2026" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Цена:</label>
+                    <input type="number" id="price" name="price" value="{{ car.price if car else '' }}" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="color">Цвет:</label>
+                    <input type="text" id="color" name="color" value="{{ car.color if car else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="mileage">Пробег:</label>
+                    <input type="number" id="mileage" name="mileage" value="{{ car.mileage if car else '0' }}" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="engine">Двигатель:</label>
+                    <input type="text" id="engine" name="engine" value="{{ car.engine if car else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="transmission">КПП:</label>
+                    <input type="text" id="transmission" name="transmission" value="{{ car.transmission if car else '' }}" required>
+                </div>
+            </div>
+            
+            {% if not car %}
+            <div class="form-group">
+                <p style="color: #666; font-size: 0.9rem;">
+                    Фотография будет автоматически выбрана из доступных (1-10). 
+                    Сейчас в базе {{ cars_count if cars_count else 0 }} автомобилей.
+                    Новому автомобилю будет присвоено фото #{{ ((cars_count if cars_count else 0) % 10) + 1 }}
+                </p>
+            </div>
+            {% endif %}
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">{{ 'Сохранить' if car else 'Добавить' }}</button>
+                <a href="{{ url_for('main.cars') }}" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

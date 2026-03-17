@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<div class="hero">
+    <h1>Добро пожаловать в AutoSalon</h1>
+    <p>Ваш надежный партнер в мире автомобилей с 2010 года</p>
+</div>
+
+<section class="content-section">
+    <div class="container">
+        <div class="welcome-text">
+            <h2>Почему выбирают нас?</h2>
+            <p>AutoSalon - это один из ведущих автосалонов России. Мы предлагаем широкий выбор новых и подержанных автомобилей от мировых производителей.</p>
+            <p>Наши преимущества:</p>
+            <ul class="advantages-list">
+                <li> Более 1000 автомобилей в наличии</li>
+                <li> Выгодные условия кредитования и лизинга</li>
+                <li> Trade-in - выгодно обменяем ваш автомобиль</li>
+                <li> Полное юридическое сопровождение сделки</li>
+                <li> Гарантия на все автомобили</li>
+                <li> Сервисное обслуживание и страхование</li>
+            </ul>
+        </div>
+        
+        <h2>Популярные автомобили</h2>
+        <p class="section-description">Представляем вашему вниманию наиболее востребованные модели этого месяца. Все автомобили прошли полную диагностику и готовы к эксплуатации.</p>
+        
+        <div class="cars-grid">
+            {% for car in cars %}
+            <div class="car-card">
+                <img src="{{ url_for('static', filename='images/' + car.photo) }}" alt="{{ car.brand }}" onerror="this.src='https://via.placeholder.com/400x300?text=Auto'">
+                <div class="car-info">
+                    <h3>{{ car.brand }} {{ car.model }}</h3>
+                    <p><strong>Год выпуска:</strong> {{ car.year }}</p>
+                    <p><strong>Цена:</strong> {{ car.price }} </p>
+                    <p><strong>Пробег:</strong> {{ car.mileage }} км</p>
+                    <p><strong>Цвет:</strong> {{ car.color }}</p>
+                    <p><strong>Двигатель:</strong> {{ car.engine }}</p>
+                    <p><strong>КПП:</strong> {{ car.transmission }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-block">
+            <h3>Индивидуальный подход к каждому клиенту</h3>
+            <p>Мы понимаем, что выбор автомобиля - это важное решение. Поэтому наши специалисты помогут вам подобрать идеальный автомобиль, учитывая все ваши пожелания и требования. 
+            Мы работаем как с частными клиентами, так и с юридическими лицами.</p>
+            <p>Приглашаем вас посетить наш салон и лично ознакомиться с представленными автомобилями. 
+            Наши менеджеры проведут тест-драйв и ответят на все интересующие вопросы.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

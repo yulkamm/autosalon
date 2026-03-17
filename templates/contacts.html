@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Контакты{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Наши контакты</h1>
+    <p>Свяжитесь с нами любым удобным способом</p>
+</div>
+
+<section class="content-section">
+    <div class="container">
+        <div class="contact-info">
+            <h2> Основная информация</h2>
+            <div class="contact-details">
+                <p><strong> Адрес головного офиса:</strong><br>125009, г. Москва, ул. Тверская, д. 15, Бизнес-центр "Столица"</p>
+                <p><strong> Телефоны:</strong><br>
+                    Отдел продаж: +7 (495) 123-45-67<br>
+                    Сервисный центр: +7 (495) 123-45-68<br>
+                    Круглосуточная горячая линия: 8 (800) 555-35-35</p>
+                <p><strong> Электронная почта:</strong><br>
+                    sales@autosalon.ru - отдел продаж<br>
+                    service@autosalon.ru - сервисный центр<br>
+                    info@autosalon.ru - общая информация</p>
+                <p><strong> Режим работы:</strong><br>
+                    Понедельник - Пятница: 9:00 - 21:00<br>
+                    Суббота: 10:00 - 20:00<br>
+                    Воскресенье: 10:00 - 18:00</p>
+            </div>
+        </div>
+        
+        <h2> Как нас найти</h2>
+        <p class="section-description">Наш автосалон расположен в центре Москвы, в 5 минутах ходьбы от станции метро "Охотный ряд". 
+        Для посетителей предусмотрена бесплатная парковка на 50 мест.</p>
+        
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2244.4!2d37.6173!3d55.7558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a50b315e573%3A0xa886bf5a3d9b2e68!2sThe%20Moscow%20Kremlin!5e0!3m2!1sru!2sru!4v1234567890" 
+                    width="100%" height="450" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        
+        <div class="additional-info">
+            <h3> Тест-драйв</h3>
+            <p>Записаться на тест-драйв любого автомобиля можно по телефону или через форму обратной связи. 
+            Тест-драйв проводится бесплатно при наличии водительского удостоверения категории B и стаже вождения от 2 лет.</p>
+            
+            <h3> Финансовые услуги</h3>
+            <p>Мы сотрудничаем с ведущими банками России и предлагаем выгодные условия автокредитования:
+            ставка от 5.9%, первоначальный взнос от 0%, срок кредитования до 7 лет.
+            Также доступен лизинг для юридических лиц с налоговыми преимуществами.</p>
+        </div>
+        
+        <h2> Наши менеджеры</h2>
+        <p class="section-description">Команда профессиональных менеджеров готова помочь вам с выбором автомобиля. 
+        Каждый менеджер имеет многолетний опыт работы и глубокие знания автомобильного рынка.</p>
+        
+        <div class="contacts-grid">
+            {% for customer in customers %}
+            <div class="contact-card">
+                <img src="{{ url_for('static', filename='images/' + customer.photo) }}" alt="{{ customer.full_name }}" onerror="this.src='https://via.placeholder.com/250x250?text=Менеджер'">
+                <div class="contact-details">
+                    <h4>{{ customer.full_name }}</h4>
+                    <p> {{ customer.phone }}</p>
+                    <p> {{ customer.email }}</p>
+                    <p> {{ customer.address }}</p>
+                    <p> Статус: {{ customer.status }}</p>
+                    <p> Специализация: {{ customer.preferred_car }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="feedback-section">
+            <h3> Обратная связь</h3>
+            <p>Мы ценим мнение каждого клиента. Если у вас есть предложения, замечания или вопросы, 
+            пожалуйста, напишите нам. Мы обязательно ответим в течение рабочего дня.</p>
+            <a href="mailto:info@autosalon.ru" class="btn btn-primary">Написать письмо</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

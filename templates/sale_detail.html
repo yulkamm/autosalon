@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Продажа {{ sale.car_brand }}{% endblock %}
+{% block content %}
+<div class="page-header"><h1> Продажа {{ sale.car_brand }} {{ sale.car_model }}</h1></div>
+<section class="content-section">
+    <div class="container">
+        <div class="detail-card">
+            <div class="detail-photo">
+                <img src="{{ url_for('static', filename='images/' + sale.photo) }}" alt="{{ sale.car_brand }}" onerror="this.src='https://via.placeholder.com/600x400?text=No+Photo'">
+            </div>
+            <div class="detail-info">
+                <h2>Информация о сделке</h2>
+                <div class="detail-row"><span class="detail-label">Авто:</span><span class="detail-value">{{ sale.car_brand }} {{ sale.car_model }}</span></div>
+                <div class="detail-row"><span class="detail-label">Дата:</span><span class="detail-value">{{ sale.sale_date.strftime('%d.%m.%Y') }}</span></div>
+                <div class="detail-row"><span class="detail-label">Цена:</span><span class="detail-value price">{{ sale.sale_price }} </span></div>
+                <div class="detail-row"><span class="detail-label">Покупатель:</span><span class="detail-value">{{ sale.customer_name }}</span></div>
+                <div class="detail-row"><span class="detail-label">Телефон:</span><span class="detail-value">{{ sale.customer_phone }}</span></div>
+                <div class="detail-row"><span class="detail-label">Менеджер:</span><span class="detail-value">{{ sale.manager_name }}</span></div>
+                <div class="detail-row"><span class="detail-label">Оплата:</span><span class="detail-value">{{ sale.payment_method }}</span></div>
+            </div>
+        </div>
+        <div class="detail-actions">
+            <a href="{{ url_for('main.sales') }}" class="btn"> Назад</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

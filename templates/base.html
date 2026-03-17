@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Автосалон{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">Автосалон</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('main.index') }}">Главная</a></li>
+                <li><a href="{{ url_for('main.about') }}">О нас</a></li>
+                <li><a href="{{ url_for('main.contacts') }}">Контакты</a></li>
+                <li><a href="{{ url_for('main.cars') }}">Автомобили</a></li>
+                <li><a href="{{ url_for('main.sales') }}">Продажи</a></li>
+                {% if current_user.is_authenticated %}
+                    {% if current_user.is_admin %}
+                    <li><a href="{{ url_for('main.admin_dashboard') }}" class="admin-link">Админ-панель</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('main.logout') }}">Выйти ({{ current_user.username }})</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('main.login') }}">Вход</a></li>
+                    <li><a href="{{ url_for('main.register') }}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Автосалон Премиум. Все права защищены.</p>
+            <p>г. Москва, ул. Тверская, д. 15 | +7 (495) 123-45-67 | info@autosalon.ru</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}О нас{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>О нашем автосалоне</h1>
+    <p>История успеха и наши ценности</p>
+</div>
+
+<section class="content-section">
+    <div class="container">
+        <div class="about-text">
+            <h2>15 лет на автомобильном рынке России</h2>
+            <p>AutoSalon начал свою деятельность в 2010 году с небольшого шоу-рума в Москве. 
+            Сегодня мы - это сеть автосалонов в крупнейших городах страны с годовым объемом продаж более 5000 автомобилей.</p>
+            
+            <h3>Наша миссия</h3>
+            <p>Мы стремимся сделать процесс покупки автомобиля максимально комфортным и прозрачным для наших клиентов. 
+            Предлагаем только проверенные автомобили с полной историей обслуживания и юридической чистотой.</p>
+            
+            <h3>Наши ценности</h3>
+            <ul class="values-list">
+                <li><strong>Честность</strong> - полная прозрачность сделок и отсутствие скрытых комиссий</li>
+                <li><strong>Качество</strong> - тщательная проверка каждого автомобиля по 150 параметрам</li>
+                <li><strong>Профессионализм</strong> - команда опытных специалистов и сертифицированных механиков</li>
+                <li><strong>Клиентоориентированность</strong> - индивидуальный подход и постпродажное обслуживание</li>
+            </ul>
+        </div>
+        
+        <h2>Наш автопарк</h2>
+        <p>Мы представляем автомобили ведущих мировых производителей: Toyota, BMW, Mercedes-Benz, Audi, Lexus и многих других. 
+        В наличии всегда более 1000 автомобилей различных марок, моделей и ценовых категорий.</p>
+        
+        <div class="photos-grid">
+            {% for car in cars %}
+            <div class="photo-item">
+                <img src="{{ url_for('static', filename='images/' + car.photo) }}" alt="{{ car.brand }}" onerror="this.src='https://via.placeholder.com/300x200?text=Auto'">
+                <p><strong>{{ car.brand }} {{ car.model }}</strong></p>
+                <p>{{ car.year }} г.в. | {{ car.price }} </p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="stats-block">
+            <h3>Наши достижения в цифрах</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>15+</h4>
+                    <p>лет на рынке</p>
+                </div>
+                <div class="stat-item">
+                    <h4>50000+</h4>
+                    <p>довольных клиентов</p>
+                </div>
+                <div class="stat-item">
+                    <h4>1000+</h4>
+                    <p>автомобилей в наличии</p>
+                </div>
+                <div class="stat-item">
+                    <h4>50+</h4>
+                    <p>партнеров-производителей</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
