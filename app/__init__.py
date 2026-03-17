@@ -20,19 +20,34 @@ def create_app(config_class=Config):
                 static_folder=os.path.join(project_root, 'static'))
     
     app.config.from_object(config_class)
+    
+    # ПРОВЕРКА какой БД используем
+    print(f"DATABASE_URL: {app.config.get('SQLALCHEMY_DATABASE_URI')}")
+    
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
     
-    # ИНИЦИАЛИЗАЦИЯ БАЗЫ ДАННЫХ ПРИ СТАРТЕ
+    # Импортируем ВСЕ модели ДО создания таблиц
+    from app.models import User, Car, Sale, Customer
+    
+    # Инициализация БД
     with app.app_context():
         try:
+            print("Creating tables...")
             db.create_all()
-            print("✅ Database tables created!")
+            print("✅ Tables created!")
             
-            # Создаем тестовых пользователей если нет
-            from app.models import User, Car
-            if not User.query.first():
+            # Проверяем пользователей
+            try:
+                user_count = User.query.count()
+                print(f"Users in DB: {user_count}")
+            except Exception as check_error:
+                print(f"Warning checking users: {check_error}")
+                user_count = 0
+            
+            if user_count == 0:
+                print("Creating test users...")
                 admin = User(username='admin', email='admin@autosalon.ru', is_admin=True)
                 admin.set_password('admin123')
                 db.session.add(admin)
@@ -41,7 +56,7 @@ def create_app(config_class=Config):
                 user.set_password('user123')
                 db.session.add(user)
                 
-                # Создаем несколько тестовых автомобилей
+                # Создаем тестовые автомобили
                 import random
                 brands = ['Toyota', 'BMW', 'Mercedes']
                 for i in range(3):
@@ -60,8 +75,13 @@ def create_app(config_class=Config):
                 
                 db.session.commit()
                 print("✅ Test data created!")
+            else:
+                print("✅ Users already exist!")
+                
         except Exception as e:
             print(f"❌ Database init error: {e}")
+            import traceback
+            traceback.print_exc()
     
     from app.routes import main_bp
     app.register_blueprint(main_bp)
