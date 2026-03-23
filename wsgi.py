@@ -1,12 +1,10 @@
 ﻿import os
-from flask import Flask
+from app import create_app
 
-app = Flask(__name__)
+# Создаем приложение
+application = create_app()  # Важно для uWSGI
 
-@app.route('/')
-def index():
-    return '<h1> IT WORKS!</h1>'
-
+# Для локального запуска
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8080))
-    app.run(host='0.0.0.0', port=port)
+    port = int(os.environ.get('PORT', 5000))
+    application.run(host='0.0.0.0', port=port, debug=False)
